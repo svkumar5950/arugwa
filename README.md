@@ -1,2 +1,0 @@
-# arugwa
-Created with CodeSandbox

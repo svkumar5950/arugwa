@@ -1,0 +1,578 @@
+
+// Global Declarations
+
+// Fonts 
+
+$font-brand: 'Lobster', cursive;
+$font-header: 'ABeeZee', sans-serif;;
+$font-text: 'Comfortaa', cursive;
+
+// Colors
+
+$bc-color: #30343F;
+$accent-color: #FFED66;
+$second-accent-color: #FF5E5B;
+$text-color: #FAFAFF;
+
+// Media Queries
+
+@mixin mq($val){
+  @media screen and (max-width: $val){
+    @content;
+  }
+}
+
+
+// Global Initializations
+
+body {
+  margin: 0;
+  padding: 0;
+  width : 100vw;
+}
+
+// For the App
+
+.App {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  overflow: hidden;
+    a {
+      text-decoration: none;
+    }
+    li {
+      list-style-type: none;
+    }
+    p{
+      color: $bc-color;
+      font-family: $font-text;
+    }
+    h3 {
+      color: $second-accent-color;
+      font-family: $font-header;
+    }
+    
+   button.btn {
+    width: 15vw;
+    height: 5vh;
+    cursor: pointer;
+    background-color: $bc-color;
+    border-style: none;
+    outline: none;
+    transition: background-color .4s ease-in-out;
+    &:hover{
+      background-color:lighten($color: $bc-color, $amount: 25%);
+    }
+  }
+}
+
+
+// Custom Stylling for the App Begins
+
+// App Component
+
+.App {
+  display: grid;
+  grid-template-columns:7vw  93vw;
+  grid-template-rows: 10vh 85vh 5vh;
+  grid-template-areas: 
+        "navbar header",
+        "navbar main",
+        "navbar footer "
+}
+
+// Media Query For App Latout
+
+@include mq(950px){
+  .App{
+    
+  grid-template-rows: 10vh auto 5vh;
+    grid-template-areas: 
+    "navbar header",
+    "navbar main",
+    "navbar footer " ;
+    overflow-y: visible;
+ }
+}
+@include mq(500px){
+  .App{
+    grid-template-areas: 
+    "navbar header",
+    "main main",
+    "footer footer " ;
+    overflow-y: visible;
+ }
+}
+
+// App - Header Component
+
+.App {
+  .app-header {
+    grid-area : "header";
+    display: flex;
+    height: 10vh;
+    .app-brand {
+      flex-basis: 60%;
+      h1 {
+        text-align: center;
+        a{
+          color: $accent-color;
+          font-family: $font-brand;
+        }
+      }
+    }
+    .app-cart{
+      flex-basis: 35%;
+      text-align: end;
+      align-self: center;
+      .cart-btn{
+        cursor: pointer;
+        i{
+          font-size: 30px;
+          color: $accent-color;
+        }
+        span {
+          position: absolute;
+          color: $second-accent-color;
+          font-family: $font-header;
+          font-weight: 600;
+          margin-left: 3px;
+        }
+      }
+    }
+  }
+}
+
+// Media Query For Header Component
+
+@include mq(400px){
+.App {
+  .app-header {
+    .app-brand {
+      margin-left: 4vw;
+    }
+  }
+ }
+}
+// App - Nav Items
+
+.App {
+  .app-navbar{
+    grid-area: "navbar";
+    height: 100vh;
+    background-color: $bc-color;
+    cursor: pointer;
+    .app-nav-menu {
+      visibility: hidden;
+       position: absolute;
+       width: 40px;
+       height: 20px;
+       left: 5vw;
+       top: 4vh;
+       z-index: 5;
+       div {
+         display: flex;
+         justify-content: flex-end;
+         width: 80%;
+         height: 5px;
+         border-radius: 25px;
+         background-color: $second-accent-color;
+         &::after {
+           content: "";
+           position: absolute ;
+           width: 100%;
+           height: 5px;
+           top: 60%;
+           border-radius: 25px;
+           background-color: $second-accent-color;
+         }
+       }
+    }
+    nav {
+      transform: rotate(-90deg);
+      ul{
+        display: flex;
+        margin-left: -650px;
+        justify-content: space-around;
+        align-items: center;
+        li{
+          width: 25%;
+          a{
+            color: $accent-color;
+            font-family: $font-header;
+          }
+          a.active {
+            color: $second-accent-color;
+          }
+        }
+      }
+    }
+  }
+}
+
+// Media Query for Nav Items 
+
+
+@include mq(950px){
+  .App {
+    .app-navbar {
+      height: 100%;
+      background-color: transparent;
+      .app-nav-menu {
+        visibility: visible;
+      }
+      nav {
+          transform: rotate(0);
+          position: absolute;
+          width : 100vw;
+          height: 100vh;
+          z-index: 3;
+          overflow: hidden;
+          background-color: $bc-color;
+        ul{
+          margin-left: 0;
+          margin-top: 25%;
+          flex-direction: column-reverse;
+          justify-content: space-around;
+          li {
+            margin-top: 7vh;
+            flex-basis: 100%;
+            a {
+              font-size: 25px;
+            }
+          }
+
+        }
+      }
+
+      // Nav Menu Close
+      .app-nav-menu.close {
+        
+        div {
+          transform : rotate(50deg);
+          transition: transform 0.3s ease-in-out;
+           &:hover {
+             transform: rotate(220deg)
+           }
+          &::after {
+          transform: rotate(-100deg) translate(3.5px);
+          }
+        }
+      }
+      nav.navbar {
+        visibility: hidden;
+      }
+    }
+  }
+}
+
+// App - Main - Components
+
+// Animation For pages
+
+.App { 
+    .pages {
+      &-appear {
+        opacity: 0;
+      }
+      &-appear-active {
+        opacity: 1;
+        transition: opacity 400ms ease-in-out;
+      }
+    }
+}
+
+// Animation for Details Component
+
+.App {
+  .details {
+    &-appear {
+      transform: scale(0);
+     }
+     &-appear-active {
+       transform : scale(1);
+       transition: transform 500ms ease-in-out;
+     }
+  }
+}
+
+// Home Component
+.App {
+ 
+  .app-components {
+    grid-area: "main";
+    grid-column: 2;
+    width: 90vw;
+    .app-home-component {
+      display: flex;
+      justify-content:space-around;
+      .home-content {
+        flex-basis: 55%;
+        img{
+         max-width: 100%;
+          opacity: 0.9;     
+          margin-top: 10%;
+          
+        }
+        p{
+          text-align: center;
+        }
+      }
+      .home-description {
+        flex-basis: 30%;
+        align-self: center;
+        h2 {
+          color: $second-accent-color;
+          font-family: $font-header;
+          border-bottom: 2px solid $second-accent-color;
+        }
+        h3{
+          color: $bc-color;
+        }
+          i{
+            color : $accent-color;
+            font-size: 25px;
+          }
+        }
+      }
+  }
+}
+
+// Media Query For Home Component
+
+@include mq(750px) {
+  .App{
+  .app-components{
+    .app-home-component {
+    flex-wrap: wrap;
+      .home-content {
+        flex-basis: 100%;
+      }
+      .home-description {
+        flex-basis: 100%;
+      }
+    }
+
+    }
+  }
+}
+
+
+  // Laptops Compponent
+
+.App {
+
+  .app-laptopComponent,.app-mobileComponent ,.app-tabletComponent{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-content: space-around;
+  }
+}
+
+
+ // Item Component
+ .App {
+  .app-itemComponent {
+    flex-basis: 30%;
+    cursor: pointer;
+    margin-bottom: 3vh;
+    padding: 7px;
+    border: 2px solid $bc-color;
+    img {
+      margin-left: 15%;
+      max-width: 100%;
+      height: 16vh;
+    }
+    button {
+     width: 100%;
+       a {
+         color: $accent-color;
+         font-family: $font-header;
+        }
+    }
+  }
+}
+
+// Media Query for Item Component 
+@include mq(1400px){
+.App {
+  .app-itemComponent {
+   margin-bottom: 1vh;
+      img {
+        height: 14vh;
+      }
+  }
+}
+}
+@include mq(950px){
+.App {
+  .app-itemComponent {
+    flex-basis: 45%;
+    margin-bottom: 1vh;
+   img {
+     height: 10vh;
+   }
+  }
+}
+}
+@include mq(500px){
+.App {
+  .app-itemComponent {
+    flex-basis: 90%;
+    margin-bottom: 2vh;
+   
+  }
+}
+}
+
+// Details Component
+
+.App {
+  .app-deatilComponent{
+    position: absolute;
+    top: 10%;
+    left: 10%;
+    width: 80vw;
+    height: 85vh;
+    display: flex;
+    flex-wrap: wrap;
+    background-color:$accent-color;
+    border: 2px solid $bc-color;
+    .details-close-btn{
+      flex-basis: 100%;
+      margin-top: 1vh;
+     button {
+       background-color: transparent;
+       margin-left: -45%;
+       i {
+         font-size: 35px;
+         color: $second-accent-color;
+        }
+      }
+    }
+    .details-items {
+      flex-basis: 100%;
+      height: 70vh;
+      img {
+        width: 100%;
+        height: 60%;
+        max-width: 100%;
+        object-fit: contain;
+        margin: 1vh auto;
+      }
+      h3 ,p ,h4{
+        text-align: center;
+      }
+      h4 {
+        color : $bc-color;
+      }
+    }
+    .item-cart {
+      flex-basis: 90%;
+      display: flex;
+      justify-content: space-around;
+      button {
+        width: 50px;
+        text-align: center;
+       &:nth-child(2){
+         width: 70px;
+         color: $second-accent-color;
+       }
+       i {
+         color: $second-accent-color;
+         font-size: 20px;
+       }
+      }
+    }
+  }
+  .app-deatilComponent.close {
+    display: none;
+  }
+}
+
+// Media Query for Deatails Component
+
+@include mq(600px) {
+  .App{
+    .app-deatilComponent {
+      .item-cart {
+        margin-left: 5vw;
+        button {
+          margin-left: 2vw;
+          &:nth-child(2){
+            margin-left: 2vw;
+          }
+        }
+      }
+    }
+  }
+}
+
+
+// Cart Component
+
+.App {
+
+  .app-cart {
+    .cart-empty {
+      text-align: center;
+      button {
+        a {
+          color: $second-accent-color;
+          font-family: $font-header;
+        }
+      }
+    }
+
+
+
+    .cart-items {
+       width: 90%;
+       height: 10vh;
+       margin: 1vh auto;
+       padding: 5px;
+       border: 2px solid $second-accent-color;
+       img{
+         display: inline;
+         max-width: 100%;
+         width : 5vw;
+         object-fit: contain;
+       }
+       h3 ,p {
+         display: inline;
+         margin-left: 2vw;
+       }
+       span {
+         font-family: $font-brand;
+         margin-left: 3vw;
+       }
+    }
+    .cart-total {
+      text-align: end;
+      margin-right: 5vw;
+    }
+  }
+}
+
+// App - Footer 
+
+.App {
+  .app-footer{
+    grid-area: "footer";
+    width: 100vw;
+    .app-footer-social {
+      display: flex;
+      justify-content: flex-end;
+      i{
+        margin-right: 3vw;
+        color: $second-accent-color;
+        font-size: 35px;
+        cursor: pointer;
+      }
+    }
+  }
+}
